@@ -172,7 +172,7 @@ export function Dashboard({ onNavigate }: { onNavigate: (page: PageName) => void
       {!loading && data && (
         <>
           <div className="kpi-grid">
-            <article className="kpi">
+            <article className="kpi kpi-revenue">
               <div className="kpi-icon">
                 <Icon name="revenue" />
               </div>
@@ -182,7 +182,7 @@ export function Dashboard({ onNavigate }: { onNavigate: (page: PageName) => void
                 <p className="kpi-note">Sum of recorded sales</p>
               </div>
             </article>
-            <article className="kpi">
+            <article className="kpi kpi-sales">
               <div className="kpi-icon">
                 <Icon name="list" />
               </div>
@@ -192,7 +192,7 @@ export function Dashboard({ onNavigate }: { onNavigate: (page: PageName) => void
                 <p className="kpi-note">Completed sale records</p>
               </div>
             </article>
-            <article className="kpi">
+            <article className="kpi kpi-products">
               <div className="kpi-icon">
                 <Icon name="products" />
               </div>
@@ -202,7 +202,7 @@ export function Dashboard({ onNavigate }: { onNavigate: (page: PageName) => void
                 <p className="kpi-note">Items in the catalog</p>
               </div>
             </article>
-            <article className="kpi">
+            <article className="kpi kpi-stock">
               <div className="kpi-icon">
                 <Icon name="layers" />
               </div>

@@ -156,7 +156,13 @@ export function Icon({ name, size = 20 }: IconProps) {
 export function Logo() {
   return (
     <svg className="logo" width="36" height="36" viewBox="0 0 36 36" aria-hidden="true" focusable="false">
-      <rect width="36" height="36" rx="10" fill="#1E5BB8" />
+      <rect width="36" height="36" rx="10" fill="url(#logo-fill)" />
+      <defs>
+        <linearGradient id="logo-fill" x1="4" y1="2" x2="32" y2="34" gradientUnits="userSpaceOnUse">
+          <stop stopColor="#38BDF8" />
+          <stop offset="1" stopColor="#1D4ED8" />
+        </linearGradient>
+      </defs>
       <path
         d="M9.5 24.5V11.5L18 17.8 26.5 11.5v13"
         fill="none"

@@ -1,14 +1,14 @@
 :root {
-  --navy: #0e1c30;
+  --navy: #0b1b33;
   --ink: #142033;
   --muted: #4a5a70;
-  --canvas: #f3f5f8;
+  --canvas: #eef3f8;
   --surface: #ffffff;
-  --border: #e5e9f0;
-  --border-strong: #d3dae4;
-  --primary: #1e5bb8;
-  --primary-hover: #184c9b;
-  --primary-soft: #e8f1fc;
+  --border: #e3eaf3;
+  --border-strong: #cdd7e6;
+  --primary: #1d4ed8;
+  --primary-hover: #1e40af;
+  --primary-soft: #e7efff;
   --success: #0e7a45;
   --success-soft: #e8f6ee;
   --success-line: #b7e0c8;
@@ -36,7 +36,10 @@ body {
   margin: 0;
   min-height: 100vh;
   min-height: 100dvh;
-  background: var(--canvas);
+  background:
+    radial-gradient(900px 420px at 100% -10%, rgba(45, 212, 191, 0.16), transparent 60%),
+    radial-gradient(800px 380px at 0% 0%, rgba(59, 130, 246, 0.16), transparent 55%),
+    var(--canvas);
   color: var(--ink);
   font-family: var(--font);
   font-size: 16px;
@@ -109,12 +112,15 @@ button:disabled {
   flex-direction: column;
   width: 252px;
   flex-shrink: 0;
-  background: var(--navy);
+  background:
+    linear-gradient(180deg, rgba(56, 189, 248, 0.16), transparent 180px),
+    linear-gradient(180deg, #12315c 0%, var(--navy) 42%, #091526 100%);
   color: #d5dee9;
   position: sticky;
   top: 0;
   height: 100vh;
   height: 100dvh;
+  box-shadow: inset -1px 0 0 rgba(125, 211, 252, 0.18);
 }
 
 .sidebar-head {
@@ -204,8 +210,9 @@ button:disabled {
 }
 
 .nav-link.active {
-  background: rgba(255, 255, 255, 0.1);
+  background: linear-gradient(90deg, rgba(56, 189, 248, 0.28), rgba(37, 99, 235, 0.18));
   color: #fff;
+  box-shadow: inset 3px 0 0 #7dd3fc;
 }
 
 .sidebar-backdrop {
@@ -223,8 +230,17 @@ button:disabled {
   position: sticky;
   top: 0;
   z-index: 20;
-  background: var(--surface);
+  background: rgba(255, 255, 255, 0.92);
   border-bottom: 1px solid var(--border);
+  box-shadow: 0 1px 0 rgba(29, 78, 216, 0.04);
+  backdrop-filter: blur(10px);
+}
+
+.topbar::before {
+  content: "";
+  display: block;
+  height: 3px;
+  background: linear-gradient(90deg, #0f766e, #1d4ed8 45%, #7c3aed);
 }
 
 .topbar-inner {
@@ -279,8 +295,8 @@ button:disabled {
   width: 36px;
   height: 36px;
   border-radius: 50%;
-  background: var(--primary-soft);
-  color: var(--primary);
+  background: linear-gradient(135deg, #1d4ed8, #0f766e);
+  color: #fff;
   font-size: 0.75rem;
   font-weight: 700;
 }
@@ -352,6 +368,7 @@ button:disabled {
 
 .eyebrow {
   margin: 0 0 6px;
+  color: var(--primary);
   font-size: 0.8125rem;
   font-weight: 600;
 }
@@ -390,9 +407,10 @@ button:disabled {
 }
 
 .btn-primary {
-  background: var(--primary);
+  background: linear-gradient(180deg, #2563eb, var(--primary));
   border-color: var(--primary);
   color: #fff;
+  box-shadow: 0 1px 2px rgba(29, 78, 216, 0.28);
 }
 
 .btn-primary:hover:not(:disabled) {
@@ -640,8 +658,25 @@ select.control {
   padding: 18px;
   background: var(--surface);
   border: 1px solid var(--border);
+  border-top: 3px solid var(--primary);
   border-radius: 12px;
   box-shadow: var(--shadow);
+}
+
+.kpi-revenue {
+  border-top-color: #1d4ed8;
+}
+
+.kpi-sales {
+  border-top-color: #0f766e;
+}
+
+.kpi-products {
+  border-top-color: #6d28d9;
+}
+
+.kpi-stock {
+  border-top-color: #15803d;
 }
 
 .kpi-icon {
@@ -653,6 +688,26 @@ select.control {
   border-radius: 10px;
   background: var(--primary-soft);
   color: var(--primary);
+}
+
+.kpi-revenue .kpi-icon {
+  background: #e7efff;
+  color: #1d4ed8;
+}
+
+.kpi-sales .kpi-icon {
+  background: #e6f7f4;
+  color: #0f766e;
+}
+
+.kpi-products .kpi-icon {
+  background: #f3e8ff;
+  color: #6d28d9;
+}
+
+.kpi-stock .kpi-icon {
+  background: #e8f6ee;
+  color: #15803d;
 }
 
 .kpi-label,
@@ -757,8 +812,8 @@ td {
 }
 
 th {
-  background: #f8fafc;
-  color: var(--muted);
+  background: #f3f7fd;
+  color: #31527a;
   font-size: 0.75rem;
   font-weight: 600;
   letter-spacing: 0.04em;

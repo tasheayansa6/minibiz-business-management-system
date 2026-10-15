@@ -67,12 +67,25 @@ npm install
 npm run dev
 ```
 
-Open `http://127.0.0.1:5173`. If that port is already in use, Vite prints the next port it chose. The API address the browser calls is `http://127.0.0.1:8000`, set in `frontend/src/services/api.ts`.
+Open `http://127.0.0.1:5173`. If that port is already in use, Vite prints the next port it chose. The browser calls `http://127.0.0.1:8000` unless `frontend/.env` sets `VITE_API_BASE_URL`. Copy `frontend/.env.example` to `frontend/.env` to change that address. No database password belongs in the frontend.
 
 Build a static copy with:
 
 ```bash
 npm run build
+```
+
+## Project structure
+
+```text
+frontend/src/pages        Dashboard, products, sales, history, and settings
+frontend/src/components   Application shell and shared controls
+frontend/src/services     Typed API client
+frontend/src/utils        Form checks, money display, and the low-stock rule
+backend/app/routers       Product and sales endpoints
+backend/app/schemas.py    Request and response validation
+backend/app/models.py     Shapes of the stored MongoDB documents
+backend/app/database.py   One shared MongoDB client
 ```
 
 ## What the app does
@@ -136,6 +149,20 @@ These were taken from the local app with live Atlas data.
 **The browser blocked a working API.** `curl` could read `http://127.0.0.1:8000`, but the page on port 5173 could not, because the two programs use different ports. `CORSMiddleware` in `backend/app/main.py` now allows pages on `localhost` and `127.0.0.1` to read the responses.
 
 **The virtual environment is not in the project root.** `source venv/bin/activate` fails in the top folder. The environment is `backend/venv`, so the activate command has to run after `cd backend`.
+
+## Assessment
+
+**Functionality.** The dashboard calculates revenue, sale count, catalog size, and units in stock from live records. Products can be created, edited, deleted, searched by name, and filtered by category and maximum stock. A sale stores the current price and reduces stock in one database transaction. Forms reject empty names, invalid prices, and quantities the stock cannot cover, and the page shows the reason.
+
+**Code quality.** The interface and API are separate folders. TypeScript types in `frontend/src/types` match the API models in `backend/app/schemas.py`. Form checks in `frontend/src/utils/validate.ts` follow the same limits. The database password is read from `backend/.env` and is excluded from Git. The health check lives in `backend/app/main.py`.
+
+**UI/UX.** The shell uses a navy sidebar, a colored top edge, and separate colors for the four dashboard figures. Status uses text as well as color: out of stock, low stock, and healthy stock. Pages have loading, empty, and error states. Controls have visible labels, and the layout works on a narrow screen.
+
+**Problem-solving.** The challenges section records the three setup failures that blocked the working app: an Atlas IP that did not match this computer, a browser that refused the API because the ports differed, and a virtual environment that exists only inside `backend`.
+
+**Data handling.** Money is stored as `Decimal128` and sent as strings such as `"120.50"`. Dates are timezone-aware UTC values. A sale that asks for more units than are available returns `409` and does not change stock. Unknown request fields are rejected. When Atlas cannot be reached, product and sales routes return `503` instead of an empty catalog.
+
+**Documentation.** This file covers setup, the API, data rules, and the problems above. `backend/.env.example` and `frontend/.env.example` show the settings without real secrets. FastAPI also publishes interactive docs at `http://127.0.0.1:8000/docs`.
 
 ## Deployment
 

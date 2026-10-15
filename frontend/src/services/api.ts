@@ -33,11 +33,13 @@ export class ApiError extends Error {
 }
 
 // The backend .env holds the MongoDB password and stays on the server.
-// The browser only needs the local API address.
-const API_BASE_URL = "http://127.0.0.1:8000";
-
+// The browser only needs the API address. frontend/.env can override it.
 function apiBaseUrl(): string {
-  return API_BASE_URL;
+  const configured = import.meta.env.VITE_API_BASE_URL?.trim();
+  if (configured) {
+    return configured.replace(/\/$/, "");
+  }
+  return "http://127.0.0.1:8000";
 }
 
 function formatDetail(detail: string | ValidationIssue[]): string {
