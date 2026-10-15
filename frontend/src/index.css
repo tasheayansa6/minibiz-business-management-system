@@ -1110,7 +1110,7 @@ tbody tr:hover td {
 
 .dialog {
   width: min(640px, 100%);
-  max-height: min(760px, calc(100vh - 48px));
+  max-height: min(760px, calc(100dvh - 32px));
   overflow: auto;
   padding: 22px;
   border-radius: 16px;
@@ -1361,6 +1361,12 @@ tbody tr:hover td {
 
   .kpi-grid {
     grid-template-columns: 1fr;
+  }
+
+  .menu-button.icon-button,
+  .sidebar-close.icon-button {
+    width: 44px;
+    height: 44px;
   }
 
   .user-meta {

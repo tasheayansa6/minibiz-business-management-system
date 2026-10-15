@@ -7,6 +7,7 @@ from contextlib import asynccontextmanager
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.responses import JSONResponse
+from pydantic import BaseModel, Field
 from pymongo.errors import PyMongoError
 
 from app.database import (
@@ -29,11 +30,30 @@ async def lifespan(app: FastAPI) -> AsyncIterator[None]:
         await close_mongo_connection()
 
 
+class HealthResponse(BaseModel):
+    """API and database status returned by the health check."""
+
+    status: str = Field(examples=["ok"])
+    api: str = Field(examples=["running"])
+    database: str = Field(examples=["connected"])
+
+
 app = FastAPI(
     title="MiniBiz API",
-    description="Business management and inventory tracking API.",
+    description=(
+        "Business management and inventory tracking API. "
+        "Interactive Swagger documentation is served at /docs."
+    ),
     version="1.0.0",
     lifespan=lifespan,
+    docs_url="/docs",
+    redoc_url="/redoc",
+    openapi_url="/openapi.json",
+    openapi_tags=[
+        {"name": "health", "description": "API process and database availability."},
+        {"name": "products", "description": "Create, update, search, and delete inventory."},
+        {"name": "sales", "description": "Record a sale and reduce product stock."},
+    ],
 )
 
 # Local Vite uses another port. The deployed page is a separate https address.
@@ -56,10 +76,21 @@ async def read_root() -> dict[str, str]:
     return {
         "message": "Welcome to the MiniBiz API",
         "status": "running",
+        "docs": "/docs",
     }
 
 
-@app.get("/health", tags=["health"])
+@app.get(
+    "/health",
+    tags=["health"],
+    response_model=HealthResponse,
+    responses={
+        503: {
+            "model": HealthResponse,
+            "description": "The API is running, but MongoDB did not answer.",
+        }
+    },
+)
 async def health_check() -> JSONResponse:
     """Check whether the API and MongoDB are available."""
     try:

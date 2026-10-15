@@ -26,26 +26,6 @@ function toCents(amount: string): number {
   return sign * (whole * 100 + fraction);
 }
 
-function greeting(date = new Date()): string {
-  const hour = date.getHours();
-  if (hour < 12) {
-    return "Good morning";
-  }
-  if (hour < 17) {
-    return "Good afternoon";
-  }
-  return "Good evening";
-}
-
-function todayLabel(date = new Date()): string {
-  return new Intl.DateTimeFormat("en-US", {
-    weekday: "long",
-    month: "long",
-    day: "numeric",
-    year: "numeric",
-  }).format(date);
-}
-
 function lowStockSummary(outCount: number, lowCount: number): string {
   const out =
     outCount === 1 ? "1 product is out of stock" : `${outCount} products are out of stock`;
@@ -146,8 +126,8 @@ export function Dashboard({ onNavigate }: { onNavigate: (page: PageName) => void
     <section>
       <header className="page-header">
         <div>
-          <p className="eyebrow">{todayLabel()}</p>
-          <h1>{greeting()}</h1>
+          <p className="eyebrow">Overview</p>
+          <h1>Business summary</h1>
           <p className="page-description">
             Revenue, recorded sales, catalog size, and inventory from your MiniBiz records.
           </p>

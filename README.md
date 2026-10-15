@@ -56,7 +56,7 @@ A working database returns:
 {"status":"ok","api":"running","database":"connected"}
 ```
 
-Interactive API docs are at `http://127.0.0.1:8000/docs`.
+Swagger UI is at [http://127.0.0.1:8000/docs](http://127.0.0.1:8000/docs). The same page on the deployed API is [https://minibiz-business-management-system.onrender.com/docs](https://minibiz-business-management-system.onrender.com/docs) after the API service redeploys. The OpenAPI description is at `/openapi.json`.
 
 ## Install the interface
 
@@ -162,7 +162,7 @@ These were taken from the local app with live Atlas data.
 
 **Data handling.** Money is stored as `Decimal128` and sent as strings such as `"120.50"`. Dates are timezone-aware UTC values. A sale that asks for more units than are available returns `409` and does not change stock. Unknown request fields are rejected. When Atlas cannot be reached, product and sales routes return `503` instead of an empty catalog.
 
-**Documentation.** This file covers setup, the API, data rules, and the problems above. `backend/.env.example` and `frontend/.env.example` show the settings without real secrets. FastAPI also publishes interactive docs at `http://127.0.0.1:8000/docs`.
+**Documentation.** This file covers setup, the API, data rules, and the problems above. `backend/.env.example` and `frontend/.env.example` show the settings without real secrets. Swagger UI is published by FastAPI at `/docs`, with the OpenAPI file at `/openapi.json`.
 
 ## Deployment
 
