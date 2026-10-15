@@ -1,0 +1,9 @@
+# MiniBiz backend. Python 3.10+.
+# Floors are the PyPI releases checked on 2026-10-14.
+# Each ceiling allows later patch releases of that same minor version.
+# python-dotenv is required by pydantic-settings and is not listed again.
+
+fastapi>=0.143.0,<0.144.0
+uvicorn>=0.53.0,<0.54.0
+pymongo>=4.18.3,<4.19.0
+pydantic-settings>=2.15.0,<2.16.0
